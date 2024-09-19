@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <deque>
+#include <map>
 
 struct PlayMode : Mode {
 	PlayMode();
@@ -28,19 +29,32 @@ struct PlayMode : Mode {
 	//local copy of the game scene (so code can change it during gameplay):
 	Scene scene;
 
-	//hexapod leg to wobble:
-	Scene::Transform *hip = nullptr;
-	Scene::Transform *upper_leg = nullptr;
-	Scene::Transform *lower_leg = nullptr;
-	glm::quat hip_base_rotation;
-	glm::quat upper_leg_base_rotation;
-	glm::quat lower_leg_base_rotation;
-	float wobble = 0.0f;
+	//mesh transforms
+	Scene::Transform *ghost = nullptr;
+	Scene::Transform *door = nullptr;
+	Scene::Transform *key_1 = nullptr;
+	Scene::Transform *key_2 = nullptr;
+	Scene::Transform *key_3 = nullptr;
 
-	glm::vec3 get_leg_tip_position();
+	//ghost location
+	glm::vec3 ghost_position;
 
-	//music coming from the tip of the leg (as a demonstration):
-	std::shared_ptr< Sound::PlayingSample > leg_tip_loop;
+	//tree x and y positions
+	std::map<float, float> tree_positions;
+
+	//game state trackers
+	uint8_t keys = 0;
+	uint8_t key_1_picked = 0;
+	uint8_t key_2_picked = 0;
+	uint8_t key_3_picked = 0;
+	uint8_t door_contact = 0;
+	uint8_t game_over = 0;
+
+	double pi = 3.1415926535; // Constant for my own convenience
+
+	//looped sounds coming from the ghost's location
+	std::shared_ptr<Sound::PlayingSample> stab_ghost_loop;
+	std::shared_ptr<Sound::PlayingSample> stab_loop;
 	
 	//camera:
 	Scene::Camera *camera = nullptr;
