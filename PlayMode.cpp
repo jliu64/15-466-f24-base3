@@ -56,6 +56,10 @@ Load<Sound::Sample> stab_sample(LoadTagDefault, []() -> Sound::Sample const * {
 	return new Sound::Sample(data_path("stab.wav"));
 });
 
+Load<Sound::Sample> no_stab_sample(LoadTagDefault, []() -> Sound::Sample const * {
+	return new Sound::Sample(data_path("no-stab.wav"));
+});
+
 PlayMode::PlayMode() : scene(*map_scene) {
 	//get pointers and sort tree positions for convenience:
 	for (auto &transform : scene.transforms) {
@@ -228,6 +232,7 @@ void PlayMode::update(float elapsed) {
 				std::cout << "You win!" << std::endl;
 				stab_ghost_loop->stop(0.0f);
 				Sound::play(*win_sample);
+				Sound::play_3D(*no_stab_sample, 1.0f, ghost_position, 10.0f);
 			} else if (! door_contact) {
 				door_contact = true;
 				Sound::play(*locked_sample);
@@ -310,12 +315,12 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 		));
 
 		constexpr float H = 0.09f;
-		lines.draw_text("Mouse rotates camera; WASD moves; escape ungrabs mouse. Keys: " + std::to_string(keys) + "/3",
+		lines.draw_text("Keys: " + std::to_string(keys) + "/3",
 			glm::vec3(-aspect + 0.1f * H, -1.0 + 0.1f * H, 0.0),
 			glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
 			glm::u8vec4(0x00, 0x00, 0x00, 0x00));
 		float ofs = 2.0f / drawable_size.y;
-		lines.draw_text("Mouse rotates camera; WASD moves; escape ungrabs mouse. Keys: " + std::to_string(keys) + "/3",
+		lines.draw_text("Keys: " + std::to_string(keys) + "/3",
 			glm::vec3(-aspect + 0.1f * H + ofs, -1.0 + + 0.1f * H + ofs, 0.0),
 			glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
 			glm::u8vec4(0xff, 0xff, 0xff, 0x00));

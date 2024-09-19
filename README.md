@@ -13,5 +13,7 @@ How To Play:
 Use the WASD keys to move, and the mouse to look around. Press ESC to unlock the mouse, and left-click to lock it again. Picking up keys and opening doors (if possible) is done automatically on contact.
 
 This game was built with [NEST](NEST.md).
-locked.wav, stab.wav, and stab-ghost.wav were recorded and edited on https://audiomass.co/
+
+locked.wav, stab.wav, no-stab.wav, and stab-ghost.wav were recorded and edited on https://audiomass.co/
+
 pickup.wav and win.wav were created on https://jfxr.frozenfractal.com/
